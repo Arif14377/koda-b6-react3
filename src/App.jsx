@@ -17,10 +17,18 @@ function App() {
     }
     getData()
   }, [url])
-  const keyword = "o"
+  
+  const [keyword, setKeyword] = useState("")
+
+  function getKeyword(event) {
+    const form = new FormData(event.target.form)
+    const obj = Object.fromEntries(form.entries())
+    setKeyword(obj.search)
+  }
+  
   return (
     <div>
-      <Input id="search" label="Search" name="search" placeholder="Search your character..."/>
+      <Input id="search" label="Search" name="search" placeholder="Search your character..." onInput={getKeyword}/>
       <div className="flex flex-wrap gap-6 justify-between">
         {
           data.results && data.results.filter(r=>r.name.toLowerCase().includes(keyword.toLowerCase())).map((r, idx) =>{
